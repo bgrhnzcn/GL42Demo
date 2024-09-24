@@ -1,0 +1,3 @@
+[submodule "GL42"]
+	path = lib/GL42
+	url = git@github.com:bgrhnzcn/GL42.git
