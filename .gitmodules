@@ -2,3 +2,6 @@
 	path = lib/gl42
 	url = git@github.com:bgrhnzcn/GL42.git
 	branch = main
+[submodule "lib/gl42"]
+	path = lib/gl42
+	url = git@github.com:bgrhnzcn/GL42.git
