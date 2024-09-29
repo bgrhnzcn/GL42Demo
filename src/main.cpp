@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/09/27 01:24:49 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/09/30 01:17:53 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,15 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		std::cout << "Q Released" << std::endl;
 }
 
-static unsigned int CompileShader(unsigned int type, const std::string& source)
-{
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-
-	int result;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE)
-	{
-		std::cerr << "Shader compilation failed." << std::endl;
-	}
-
-	return (id);
-}
-
-static unsigned int	CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-	unsigned int program = glCreateProgram();
-	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-	//Attaches the shaders to the program.
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	//Links the program.
-	glLinkProgram(program);
-	//Validates the program.
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-	return (program);
-}
-
 int main()
 {
 	if (!glfwInit())
 		return (1);
 	try
 	{
+		gl42::Window::setWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		gl42::Window::setWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		gl42::Window::setWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		gl42::Window win = gl42::Window(800, 600, "GL42", nullptr, nullptr);
 		if (win.getWinPtr() == nullptr)
 		{
@@ -79,22 +46,31 @@ int main()
 			glfwTerminate();
 			return (1);
 		}
-		glfwMakeContextCurrent(win.getWinPtr());
-		//buffer id for opengl. OpenGL gives id for every object uses memory segments. Like buffers or arrays.
-
-		GLfloat vertices[6] = {
-			-0.5f, -0.8f,
-			+0.0f, +0.5f,
-			+0.5f, -0.5f
+		//vertex array
+		GLfloat vertices[12] = {
+			-1.0f, +1.0f,
+			+1.0f, +1.0f,
+			+1.0f, -1.0f,
+			-1.0f, -1.0f
+		};
+		//index array
+		unsigned int indices[6] = {
+			0, 1, 2,
+			2, 3, 0
 		};
 		
+		//Must be generated for Core Profile. Compatibility profile does not require this.
+		unsigned int vertex_array_id;
+		glGenVertexArrays(1, &vertex_array_id);
+		glBindVertexArray(vertex_array_id);
+
 		//Generate generic type of buffer and assing it to buffer_id.
 		unsigned int buffer_id;
 		glGenBuffers(1, &buffer_id);
 		//Bind buffer to array buffer. Array buffer is a type of buffer that stores vertex data.
 		glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
 		//Copy data to buffer. GL_STATIC_DRAW is a type of draw that tells OpenGL that we are not going to change the data.
-		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), vertices, GL_STATIC_DRAW);
 		//Modify vertex attribute array. 0 is the index of the attribute.
 		//2 is the size of the attribute as count. GL_FLOAT is the type of the attribute.
 		//GL_FALSE is the normalization of the attribute. 2 * sizeof(float) is the stride of the attribute.
@@ -103,38 +79,24 @@ int main()
 		//Enables the vertex attribute array.
 		glEnableVertexAttribArray(0);
 		
-		//Vertex Shader
-		std::string ver = 
-			"#version 330 core\n"
-			"\n"
-			"layout(location = 0) in vec4 position;\n"
-			"\n"
-			"void main()\n"
-			"{\n"
-			"	gl_Position = position;\n"
-			"}\n";
-		//Fragment Shader
-		std::string frag = 
-			"#version 330 core\n"
-			"\n"
-			"layout(location = 0) out vec4 color;\n"
-			"\n"
-			"void main()\n"
-			"{\n"
-			"	color = vec4(1, 0, 1, 1);\n"
-			"}\n";
+		unsigned int index_buffer_id;
+		glGenBuffers(1, &index_buffer_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
-		unsigned int shader = CreateShader(ver, frag);
-		glUseProgram(shader);
+		gl42::Shader shader = gl42::Shader("res/shaders/test.glsl");
+		shader.use();
 		//Sets Callback function for key events.
 		glfwSetKeyCallback(win.getWinPtr(), key_callback);
 		//Main Rendering loop.
 		while(!win.shouldClose())
 		{
-			//Clear Buffer memeory to remove garbage values
+			//Clear Buffer memory to remove garbage values
 			glClear(GL_COLOR_BUFFER_BIT);
 			//Draws the buffer. GL_TRIANGLES is a type of draw that tells OpenGL to draw triangles.
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			//glDrawArrays(GL_TRIANGLES, 0, 6);
+			//Draws from index buffer.
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 			//Swaps front and back buffer. OpenGL deafult is two buffer. One for back one for front.
 			glfwSwapBuffers(win.getWinPtr());
 			//Polls events. Like key events.
