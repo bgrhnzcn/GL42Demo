@@ -8,16 +8,11 @@ set(CMAKE_CXX_STANDARD 20)
 # CPP Standard Required
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(OpenGL_GL_PREFERENCE GLVND)
-
-find_package(OpenGL REQUIRED)
-
 add_subdirectory(lib/gl42)
 
 add_executable(gl42Demo)
 
 target_include_directories(gl42Demo
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/gl42/lib/glfw/include
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/gl42/inc
 )
 
@@ -27,7 +22,6 @@ target_link_directories(gl42Demo
 
 target_link_libraries(gl42Demo
 	PUBLIC gl42Static
-	PUBLIC GL
 )
 
 target_sources(gl42Demo

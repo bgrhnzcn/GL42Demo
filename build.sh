@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cmake -S . -B build && make -C build/
+cmake -S . -B build && make -C build/ -j4

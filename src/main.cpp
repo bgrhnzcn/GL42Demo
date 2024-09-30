@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/09/30 01:17:53 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/10/01 01:49:45 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,19 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
-
+#include <GLFW/glfw3.h>
 #include <gl42.hpp>
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	(void)scancode;
-	(void)mods;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-	if (key == GLFW_KEY_Q && action == GLFW_RELEASE)
-		std::cout << "Q Released" << std::endl;
-}
+//static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+//{
+//	(void)scancode;
+//	(void)mods;
+//	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+//		glfwSetWindowShouldClose(window, GLFW_TRUE);
+//	if (key == GLFW_KEY_Q && action == GLFW_RELEASE)
+//		std::cout << "Q Released" << std::endl;
+//}
 
 int main()
 {
@@ -36,16 +35,9 @@ int main()
 		return (1);
 	try
 	{
-		gl42::Window::setWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		gl42::Window::setWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-		gl42::Window::setWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		gl42::Window win = gl42::Window(800, 600, "GL42", nullptr, nullptr);
 		if (win.getWinPtr() == nullptr)
-		{
-			std::cout << "Window Error" << std::endl;
-			glfwTerminate();
 			return (1);
-		}
 		//vertex array
 		GLfloat vertices[12] = {
 			-1.0f, +1.0f,
@@ -58,7 +50,7 @@ int main()
 			0, 1, 2,
 			2, 3, 0
 		};
-		
+		glEnable(GL_DEBUG_OUTPUT);
 		//Must be generated for Core Profile. Compatibility profile does not require this.
 		unsigned int vertex_array_id;
 		glGenVertexArrays(1, &vertex_array_id);
@@ -75,7 +67,7 @@ int main()
 		//2 is the size of the attribute as count. GL_FLOAT is the type of the attribute.
 		//GL_FALSE is the normalization of the attribute. 2 * sizeof(float) is the stride of the attribute.
 		//0 is the offset of the attribute inside single vertex.
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+		GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0));
 		//Enables the vertex attribute array.
 		glEnableVertexAttribArray(0);
 		
@@ -85,10 +77,14 @@ int main()
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 		gl42::Shader shader = gl42::Shader("res/shaders/test.glsl");
+		//Use after linking. Add to Shader Class.
+		unsigned int loc = glGetUniformLocation(shader.getShaderId(), "time");
 		shader.use();
 		//Sets Callback function for key events.
-		glfwSetKeyCallback(win.getWinPtr(), key_callback);
+		//glfwSetKeyCallback(win.getWinPtr(), key_callback);
 		//Main Rendering loop.
+		float i = 0;
+		float inc = 0.01f;
 		while(!win.shouldClose())
 		{
 			//Clear Buffer memory to remove garbage values
@@ -98,9 +94,13 @@ int main()
 			//Draws from index buffer.
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 			//Swaps front and back buffer. OpenGL deafult is two buffer. One for back one for front.
-			glfwSwapBuffers(win.getWinPtr());
 			//Polls events. Like key events.
-			glfwPollEvents();
+			//Access and modify uniform inside shader via location.
+			glUniform1f(loc, i);
+			win.updateWindow();
+			i += inc;
+			if (i > 1 || i < 0)
+				inc = -inc;
 		}
 	}
 	catch (gl42::InitializationExecption exception)
