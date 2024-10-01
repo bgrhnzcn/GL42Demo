@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/10/02 01:23:52 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/10/02 01:57:52 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int main()
 		{
 			//Clear Buffer memory to remove garbage values
 			glClear(GL_COLOR_BUFFER_BIT);
-			GLCall(glMatrixMode(GL_PROJECTION_MATRIX));
 			//Draws the buffer. GL_TRIANGLES is a type of draw that tells OpenGL to draw triangles.
 			//glDrawArrays(GL_TRIANGLES, 0, 6);
 			//Draws from index buffer.
