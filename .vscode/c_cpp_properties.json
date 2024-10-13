@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/lib/gl42/src/exception",
-                "${workspaceFolder}/lib/gl42/src/window"
+                "${workspaceFolder}/lib/gl42/src/window",
+                "${workspaceFolder}/lib/gl42/src/utils"
             ],
             "defines": [],
             "cStandard": "c17",

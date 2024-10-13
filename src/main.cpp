@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/10/11 17:13:00 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/10/13 03:28:56 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,24 @@ int main()
 			0, 1, 2,
 			2, 3, 0
 		};
+
+		gl42::Matrix2x2 mat = gl42::Matrix2x2(2.0f);
+		gl42::Vector2 vec = gl42::Vector2(5.0f, 2.0f);
+		mat[1] = 5;
+		mat[2] = 6;
+		gl42::Matrix2x2 test = mat * mat;
+		vec = mat * vec;
+		glm::mat2 a = mat;
+		std::cout
+			<< "[ " << a[0][0] << " " << a[1][0] << " ]" << std::endl
+			<< "[ " << a[0][1] << " " << a[1][1] << " ]" << std::endl;
+		std::cout
+			<< "[ " << test[0] << " " << test[1] << " ]" << std::endl
+			<< "[ " << test[2] << " " << test[3] << " ]" << std::endl;
+		std::cout << vec.x << ", " << vec.y << std::endl;
 		//Must be generated for Core Profile. Compatibility profile does not require this.
 		gl42::VertexArray va;
-
+		
 		//Generate generic type of buffer and assing it to buffer_id.
 		unsigned int buffer_id;
 		glGenBuffers(1, &buffer_id);

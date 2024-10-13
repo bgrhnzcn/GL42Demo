@@ -59,7 +59,12 @@
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
 			"variant": "cpp",
-			"fstream": "cpp"
+			"fstream": "cpp",
+			"chrono": "cpp",
+			"iomanip": "cpp",
+			"ratio": "cpp",
+			"sstream": "cpp",
+			"cstring": "cpp"
 		}
 	}
 }
