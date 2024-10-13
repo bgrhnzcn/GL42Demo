@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/10/13 03:28:56 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:07:22 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,30 @@ int main()
 		if (win.getWinPtr() == nullptr)
 			return (1);
 		//vertex array
-		gl42::Vector3 vertices[4] = {
-			{-1.0f, +1.0f, 0.0f},
-			{+1.0f, +1.0f, 0.0f},
-			{+1.0f, -1.0f, 0.0f},
-			{-1.0f, -1.0f, 0.0f}
+		gl42::Vector2 vertices[4] = {
+			{-1.0f, +1.0f},
+			{+1.0f, +1.0f},
+			{+1.0f, -1.0f},
+			{-1.0f, -1.0f}
 		};
 		//index array
 		unsigned int indices[6] = {
 			0, 1, 2,
 			2, 3, 0
 		};
-
 		gl42::Matrix2x2 mat = gl42::Matrix2x2(2.0f);
 		gl42::Vector2 vec = gl42::Vector2(5.0f, 2.0f);
 		mat[1] = 5;
 		mat[2] = 6;
-		gl42::Matrix2x2 test = mat * mat;
-		vec = mat * vec;
 		glm::mat2 a = mat;
 		std::cout
 			<< "[ " << a[0][0] << " " << a[1][0] << " ]" << std::endl
 			<< "[ " << a[0][1] << " " << a[1][1] << " ]" << std::endl;
+		mat = mat * mat;
+		vec = mat * vec;
 		std::cout
-			<< "[ " << test[0] << " " << test[1] << " ]" << std::endl
-			<< "[ " << test[2] << " " << test[3] << " ]" << std::endl;
+			<< "[ " << mat[0] << " " << mat[1] << " ]" << std::endl
+			<< "[ " << mat[2] << " " << mat[3] << " ]" << std::endl;
 		std::cout << vec.x << ", " << vec.y << std::endl;
 		//Must be generated for Core Profile. Compatibility profile does not require this.
 		gl42::VertexArray va;
@@ -74,12 +73,12 @@ int main()
 		//Bind buffer to array buffer. Array buffer is a type of buffer that stores vertex data.
 		glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
 		//Copy data to buffer. GL_STATIC_DRAW is a type of draw that tells OpenGL that we are not going to change the data.
-		glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(gl42::Vector3), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(gl42::Vector2), vertices, GL_STATIC_DRAW);
 		//Modify vertex attribute array. 0 is the index of the attribute.
 		//2 is the size of the attribute as count. GL_FLOAT is the type of the attribute.
 		//GL_FALSE is the normalization of the attribute. 2 * sizeof(float) is the stride of the attribute.
 		//0 is the offset of the attribute inside single vertex.
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0));
+		GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0));
 		//Enables the vertex attribute array.
 		glEnableVertexAttribArray(0);
 
