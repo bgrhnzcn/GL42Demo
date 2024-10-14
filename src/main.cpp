@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/10/13 15:07:22 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:37:37 by buozcan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define GL_SILENCE_DEPRECATION
-#define GL_GLEXT_PROTOTYPES
+#include "OpenGLDecl.hpp"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <gl42.hpp>
 
