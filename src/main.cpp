@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/10/15 01:48:41 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/11/06 19:26:04 by buozcan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main()
 {
 	if (!glfwInit())
 		return (1);
-	gl42::Window win = gl42::Window(800, 600, "GL42");
+	gl42::Window win = gl42::Window(4000, 2500, "GL42");
 	if (win.getWinPtr() == nullptr)
 		return (1);
 	//vertex array
@@ -37,7 +37,7 @@ int main()
 		{-1.0f, +1.0f},
 		{+1.0f, +1.0f},
 		{+1.0f, -1.0f},
-		{-1.0f, -1.0f}
+		{-1.0f, -1.0f},
 	};
 	//index array
 	unsigned int indices[6] = {
@@ -80,7 +80,7 @@ int main()
 		//Clear Buffer memory to remove garbage values
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Draws the buffer. GL_TRIANGLES is a type of draw that tells OpenGL to draw triangles.
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		//Draws from index buffer.
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 		//Swaps front and back buffer. OpenGL deafult is two buffer. One for back one for front.
