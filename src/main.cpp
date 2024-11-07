@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/11/06 19:26:04 by buozcan          ###   ########.fr       */
+/*   Updated: 2024/11/07 22:54:50 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main()
 {
 	if (!glfwInit())
 		return (1);
-	gl42::Window win = gl42::Window(4000, 2500, "GL42");
+	gl42::Window win = gl42::Window(800, 600, "GL42");
 	if (win.getWinPtr() == nullptr)
 		return (1);
 	//vertex array
