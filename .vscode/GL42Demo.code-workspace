@@ -64,7 +64,9 @@
 			"iomanip": "cpp",
 			"ratio": "cpp",
 			"sstream": "cpp",
-			"cstring": "cpp"
+			"cstring": "cpp",
+			"*.ipp": "cpp",
+			"complex": "cpp"
 		}
 	}
 }
