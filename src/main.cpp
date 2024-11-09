@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/11/08 21:43:04 by buozcan          ###   ########.fr       */
+/*   Updated: 2024/11/10 02:44:32 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,15 @@ int main()
 {
 	if (!glfwInit())
 		return (1);
-	gl42::Window win = gl42::Window(1800, 1600, "GL42");
+	gl42::Window win = gl42::Window(WIDTH, HEIGHT, "GL42");
 	if (win.getWinPtr() == nullptr)
 		return (1);
 	//vertex array
-	gl42::Vector3 vertices[4] = {
-		{-1.0f, +1.0f, +0.0f},
-		{+1.0f, +1.0f, +0.0f},
-		{+1.0f, -1.0f, +0.0f},
-		{-1.0f, -1.0f, +0.0f}
-	};
+	gl42::Vertex vertices[4];
+	vertices[0].position = {-1.0f, +1.0f, +0.0f};
+	vertices[1].position = {+1.0f, +1.0f, +0.0f};
+	vertices[2].position = {+1.0f, -1.0f, +0.0f};
+	vertices[3].position = {-1.0f, -1.0f, +0.0f};
 	//index array
 	unsigned int indices[6] = {
 		0, 1, 2,
@@ -53,12 +52,12 @@ int main()
 	//Bind buffer to array buffer. Array buffer is a type of buffer that stores vertex data.
 	glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
 	//Copy data to buffer. GL_STATIC_DRAW is a type of draw that tells OpenGL that we are not going to change the data.
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(gl42::Vector3), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(gl42::Vertex), vertices, GL_STATIC_DRAW);
 	//Modify vertex attribute array. 0 is the index of the attribute.
 	//2 is the size of the attribute as count. GL_FLOAT is the type of the attribute.
 	//GL_FALSE is the normalization of the attribute. 2 * sizeof(float) is the stride of the attribute.
 	//0 is the offset of the attribute inside single vertex.
-	GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0));
+	GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(gl42::Vertex), 0));
 	//Enables the vertex attribute array.
 	glEnableVertexAttribArray(0);
 
@@ -80,7 +79,7 @@ int main()
 		//Clear Buffer memory to remove garbage values
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Draws the buffer. GL_TRIANGLES is a type of draw that tells OpenGL to draw triangles.
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		//Draws from index buffer.
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 		//Swaps front and back buffer. OpenGL deafult is two buffer. One for back one for front.
