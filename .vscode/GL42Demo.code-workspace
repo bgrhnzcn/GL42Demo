@@ -66,7 +66,8 @@
 			"sstream": "cpp",
 			"cstring": "cpp",
 			"*.ipp": "cpp",
-			"complex": "cpp"
+			"complex": "cpp",
+			"ranges": "cpp"
 		}
 	}
 }

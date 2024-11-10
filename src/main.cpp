@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/11/10 02:44:32 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/11/10 20:29:39 by buozcan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int main()
 	if (win.getWinPtr() == nullptr)
 		return (1);
 	//vertex array
+	
+	gl42::ObjAsset ico("/goinfre/buozcan/gl42/res/models/test.obj");
+	
 	gl42::Vertex vertices[4];
 	vertices[0].position = {-1.0f, +1.0f, +0.0f};
 	vertices[1].position = {+1.0f, +1.0f, +0.0f};

@@ -8,6 +8,16 @@ set(CMAKE_CXX_STANDARD 20)
 # CPP Standard Required
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+execute_process(
+	COMMAND whoami
+	OUTPUT_VARIABLE USERNAME
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+if(USERNAME STREQUAL "buozcan")
+	add_definitions(-DUSER_BUOZCAN)
+endif()
+
 add_subdirectory(lib/gl42)
 
 add_executable(gl42Demo)
