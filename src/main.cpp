@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: buozcan <buozcan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/11/10 20:29:39 by buozcan          ###   ########.fr       */
+/*   Updated: 2024/11/14 00:13:36 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 #include <iostream>
 #include <gl42.hpp>
 
-//static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-//{
-//	(void)scancode;
-//	(void)mods;
-//	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-//		glfwSetWindowShouldClose(window, GLFW_TRUE);
-//	if (key == GLFW_KEY_Q && action == GLFW_RELEASE)
-//		std::cout << "Q Released" << std::endl;
-//}
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	(void)scancode;
+	(void)mods;
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (key == GLFW_KEY_Q && action == GLFW_RELEASE)
+		std::cout << "Q Released" << std::endl;
+}
 
 int main()
 {
@@ -34,8 +34,8 @@ int main()
 		return (1);
 	//vertex array
 	
-	gl42::ObjAsset ico("/goinfre/buozcan/gl42/res/models/test.obj");
-	
+	gl42::ObjAsset asset("/home/bgrhnzcn/Documents/Code/42/GL42Demo/res/models/test.obj");
+	asset.printAsset();
 	gl42::Vertex vertices[4];
 	vertices[0].position = {-1.0f, +1.0f, +0.0f};
 	vertices[1].position = {+1.0f, +1.0f, +0.0f};
@@ -74,7 +74,7 @@ int main()
 	unsigned int loc = glGetUniformLocation(shader.getShaderId(), "time");
 	shader.use();
 	//Sets Callback function for key events.
-	//glfwSetKeyCallback(win.getWinPtr(), key_callback);
+	glfwSetKeyCallback(win.getWinPtr(), key_callback);
 	//Main Rendering loop.
 	float i = 0;
 	while(!win.shouldClose())
