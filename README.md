@@ -5,6 +5,8 @@ This project is a demonstration of my custom graphic library [gl42](https://gith
 
 # How to Install
 
+This project developed with OpenGL, developer packages required to build.
+
 ### Clone recursively to clone submodules.
 
 	git clone --recurse-submodule https://github.com/bgrhnzcn/GL42Demo.git
