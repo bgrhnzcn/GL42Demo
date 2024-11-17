@@ -6,7 +6,7 @@
 /*   By: bgrhnzcn <bgrhnzcn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:13:46 by buozcan           #+#    #+#             */
-/*   Updated: 2024/11/14 00:13:36 by bgrhnzcn         ###   ########.fr       */
+/*   Updated: 2024/11/17 23:03:03 by bgrhnzcn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main()
 		return (1);
 	//vertex array
 	
-	gl42::ObjAsset asset("/home/bgrhnzcn/Documents/Code/42/GL42Demo/res/models/test.obj");
+	gl42::ObjAsset asset("/home/bgrhnzcn/Documents/gl42/res/models/test.obj");
 	asset.printAsset();
 	gl42::Vertex vertices[4];
 	vertices[0].position = {-1.0f, +1.0f, +0.0f};
