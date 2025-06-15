@@ -18,7 +18,24 @@ if(USERNAME STREQUAL "buozcan")
 	add_definitions(-DUSER_BUOZCAN)
 endif()
 
-add_subdirectory(lib/gl42)
+# Check GL42 library.
+
+set(LIB_GL42_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/gl42")
+
+if (EXISTS "${LIB_GL42_PATH}/CMakeLists.txt")
+	message("GL42 Already Cloned.")
+	add_subdirectory(${LIB_GL42_PATH})
+else ()
+	message("Fetching GL42...")
+	include(FetchContent)
+
+	FetchContent_Declare(
+		gl42
+		GIT_REPOSITORY https://github.com/bgrhnzcn/gl42.git
+		GIT_TAG main
+		SOURCE_DIR "${LIB_GL42_PATH}"
+	)
+endif()
 
 add_executable(gl42Demo)
 

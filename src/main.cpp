@@ -10,10 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "OpenGLDecl.hpp"
-
-#include <iostream>
 #include <gl42.hpp>
+#include <iostream>
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -29,11 +27,16 @@ int main()
 {
 	if (!glfwInit())
 		return (1);
-	gl42::Window win = gl42::Window(WIDTH, HEIGHT, "GL42");
+	gl42::Window win(WIDTH, HEIGHT, "GL42");
 	if (win.getWinPtr() == nullptr)
 		return (1);
+	if (glewInit())
+	{
+		std::cerr << "Failed to initialize GLEW" << std::endl;
+		return (1);
+	}
 	//vertex array
-	gl42::ObjAsset asset("./res/models/test.obj");
+	gl42::ObjAsset asset("..\\res\\models\\test.obj");
 	asset.printAsset();
 	//Must be generated for Core Profile. Compatibility profile does not require this.
 	gl42::VertexArray va;
@@ -46,15 +49,15 @@ int main()
 	GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(gl42::Vertex), 0));
 	//Enables the vertex attribute array.
 	glEnableVertexAttribArray(0);
-	gl42::Shader shader = gl42::Shader("res/shaders/test.glsl");
+	gl42::Shader shader("..\\res\\shaders\\test.glsl");
 	//Use after linking. Add to Shader Class.
 	unsigned int loc = glGetUniformLocation(shader.getShaderId(), "time");
 	shader.use();
 	//Sets Callback function for key events.
-	glfwSetKeyCallback(win.getWinPtr(), key_callback);
+	glfwSetKeyCallback(win.getWinPtr(), &key_callback);
 	//Main Rendering loop.
 	float i = 0;
-	gluPerspective(90.0, 16/9, 1.0, 100.0);
+	gluPerspective(90.0, 16.f/9, 1.0, 100.0);
 	while(!win.shouldClose())
 	{
 		//Clear Buffer memory to remove garbage values
@@ -62,7 +65,7 @@ int main()
 		//Draws the buffer. GL_TRIANGLES is a type of draw that tells OpenGL to draw triangles.
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		//Draws from index buffer.
-		GLCall(glDrawArrays(GL_TRIANGLES, 0, asset.vertices.size() / 3));
+		GLCall(glDrawArrays(GL_TRIANGLES, 0, (GLsizei)asset.vertices.size() / 3));
 		//Swaps front and back buffer. OpenGL deafult is two buffer. One for back one for front.
 		//Polls events. Like key events.
 		//Access and modify uniform inside shader via location.
