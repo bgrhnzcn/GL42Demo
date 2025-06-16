@@ -13,7 +13,6 @@
 #include "gl42.hpp"
 #include <cstdlib>
 #include <iostream>
-#include <unistd.h>
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -34,6 +33,7 @@ int main()
 		return (1);
 	glfwMakeContextCurrent(win.getWinPtr());
 	//vertex array
+	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	gl42::ObjAsset asset("..\\res\\models\\test.obj");
 	asset.printAsset();
 	//Must be generated for Core Profile. Compatibility profile does not require this.
@@ -47,7 +47,7 @@ int main()
 	GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(gl42::Vertex), 0));
 	//Enables the vertex attribute array.
 	glEnableVertexAttribArray(0);
-	gl42::Shader shader("..\\res\\shaders\\test.glsl");
+	gl42::Shader shader("..\\res\\shaders\\vertex\\v_test.glsl", "..\\res\\shaders\\fragment\\f_test.glsl");
 	//Use after linking. Add to Shader Class.
 	unsigned int loc = glGetUniformLocation(shader.getShaderId(), "time");
 	shader.use();
@@ -55,7 +55,6 @@ int main()
 	glfwSetKeyCallback(win.getWinPtr(), &key_callback);
 	//Main Rendering loop.
 	float i = 0;
-	gluPerspective(90.0, 16.f/9, 1.0, 100.0);
 	while(!win.shouldClose())
 	{
 		//Clear Buffer memory to remove garbage values
@@ -69,6 +68,6 @@ int main()
 		//Access and modify uniform inside shader via location.
 		glUniform1f(loc, (gl42::Math::sin(i) / 2) + 0.5f);
 		win.updateWindow();
-		i += 0.01f;
+		i += 0.001f;
 	}
 }
