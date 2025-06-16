@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <gl42.hpp>
+#include "gl42.hpp"
+#include <cstdlib>
 #include <iostream>
+#include <unistd.h>
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -30,11 +32,7 @@ int main()
 	gl42::Window win(WIDTH, HEIGHT, "GL42");
 	if (win.getWinPtr() == nullptr)
 		return (1);
-	if (glewInit())
-	{
-		std::cerr << "Failed to initialize GLEW" << std::endl;
-		return (1);
-	}
+	glfwMakeContextCurrent(win.getWinPtr());
 	//vertex array
 	gl42::ObjAsset asset("..\\res\\models\\test.obj");
 	asset.printAsset();

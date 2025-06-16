@@ -1,4 +1,4 @@
 #! /bin/bash
 
-./bin/gl42Demo || printf "\e[31mExitted with error code $?\n\e[0m" >> /dev/stderr
+./bin/gl42Demo || (exitcode=$?; printf "\e[31mExitted with error code $exitcode\n\e[0m" >> /dev/stderr; exit $exitcode)
 

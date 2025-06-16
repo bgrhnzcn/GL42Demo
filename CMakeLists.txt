@@ -31,10 +31,13 @@ else ()
 
 	FetchContent_Declare(
 		gl42
-		GIT_REPOSITORY https://github.com/bgrhnzcn/gl42.git
+		GIT_REPOSITORY git@github.com:bgrhnzcn/GL42.git
 		GIT_TAG main
 		SOURCE_DIR "${LIB_GL42_PATH}"
 	)
+
+	FetchContent_Populate(gl42)
+	add_subdirectory(${LIB_GL42_PATH})
 endif()
 
 add_executable(gl42Demo)
