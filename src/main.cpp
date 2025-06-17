@@ -34,7 +34,7 @@ int main()
 	glfwMakeContextCurrent(win.getWinPtr());
 	//vertex array
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	gl42::ObjAsset asset("..\\res\\models\\test.obj");
+	gl42::ObjAsset asset("./res/models/test.obj");
 	asset.printAsset();
 	//Must be generated for Core Profile. Compatibility profile does not require this.
 	gl42::VertexArray va;
@@ -47,7 +47,7 @@ int main()
 	GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(gl42::Vertex), 0));
 	//Enables the vertex attribute array.
 	glEnableVertexAttribArray(0);
-	gl42::Shader shader("..\\res\\shaders\\vertex\\v_test.glsl", "..\\res\\shaders\\fragment\\f_test.glsl");
+	gl42::Shader shader("./res/shaders/vertex/v_test.glsl", "./res/shaders/fragment/f_test.glsl");
 	//Use after linking. Add to Shader Class.
 	unsigned int loc = glGetUniformLocation(shader.getShaderId(), "time");
 	shader.use();
